@@ -193,8 +193,8 @@ def pregunta_10():
 
     rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c0'])
     rest2 = rest1.reset_index(drop=True)
-
     return rest2
+
 
 
 def pregunta_11():
