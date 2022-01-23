@@ -102,7 +102,9 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    letrasUnicos = tbl1['_c4'].str.upper().unique()
+    letrasUnicosLs = sorted(list(letrasUnicos))
+    return letrasUnicosLs
 
 
 def pregunta_07():
@@ -118,7 +120,8 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    sumaLetra = tbl0.groupby('_c1')['_c2'].sum()
+    return sumaLetra.sort_index()
 
 
 def pregunta_08():
