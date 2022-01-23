@@ -34,7 +34,8 @@ def pregunta_02():
     4
 
     """
-    return
+    columna = tbl0.shape[1]
+    return columna
 
 
 def pregunta_03():
