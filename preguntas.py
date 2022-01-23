@@ -197,7 +197,7 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    n1_tbl0 = tbl0.copy()
+    n1_tbl0 = tbl1.copy()
     n1_tbl0['Order'] = n1_tbl0.groupby('_c0')['_c4'].transform(sorted)
     n1_tbl0['New_c4'] = n1_tbl0.groupby('_c0')['Order'].transform(lambda x : ','.join(x))
 
