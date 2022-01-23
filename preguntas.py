@@ -252,4 +252,7 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    tabl0_2 = tbl0.merge(tbl2, how='inner', on='_c0')
+    tabl0_2_copy = tabl0_2.copy()
+    return tabl0_2_gr = tabl0_2_copy.groupby('_c1')['_c5b'].sum()
