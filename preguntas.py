@@ -52,7 +52,9 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    frecuencia = tbl0['_c1']
+    frecuencia = frecuencia.value_counts()    
+    return frecuencia.sort_index()
 
 
 def pregunta_04():
