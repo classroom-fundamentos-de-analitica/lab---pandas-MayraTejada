@@ -53,7 +53,7 @@ def pregunta_03():
 
     """
     frecuencia = tbl0['_c1']
-    frecuencia = frecuencia.value_counts()    
+    frecuencia = frecuencia.value_counts()
     return frecuencia.sort_index()
 
 
@@ -69,7 +69,10 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    promedio = tbl0.groupby('_c1')['_c2'].mean()
+
+    return promedio.sort_index()
 
 
 def pregunta_05():
