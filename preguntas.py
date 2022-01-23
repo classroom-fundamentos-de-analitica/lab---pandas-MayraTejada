@@ -158,7 +158,10 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    n_tbl0 = tbl0.copy()
+    n_tbl0['year'] = n_tbl0['_c3'].str.slice(0,4)
+
+    return n_tbl0.sort_index()
 
 
 def pregunta_10():
