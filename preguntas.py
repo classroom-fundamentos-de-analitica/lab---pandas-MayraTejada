@@ -197,7 +197,15 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    n1_tbl0 = tbl0.copy()
+    n1_tbl0['Order'] = n1_tbl0.groupby('_c0')['_c4'].transform(sorted)
+    n1_tbl0['New_c4'] = n1_tbl0.groupby('_c0')['Order'].transform(lambda x : ','.join(x))
+
+    newdf = n1_tbl0[['_c0', 'New_c4']]
+    newdf2 = newdf.drop_duplicates()
+    newdf3 = newdf2.rename(columns={"_c0": "_c0", "New_c4": "_c4"})
+
+    return newdf3.reset_index(drop=True)
 
 
 def pregunta_12():
@@ -215,7 +223,19 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tbl2_test = tbl2.copy()
+    tbl2_test = tbl2_test.sort_values(by=['_c0', '_c5a'])
+
+    tbl2_test['merg_cols'] = tbl2_test['_c5a'] + ':' + tbl2_test['_c5b'].astype(str)
+
+    tbl2_test['ful_merge'] = tbl2_test.groupby('_c0')['merg_cols'].transform(lambda x: ','.join(x))
+
+    tbl2_test1 = tbl2_test[['_c0', 'ful_merge']]
+    tbl2_test2 = tbl2_test1.drop_duplicates()
+
+    tbl2_test3 = tbl2_test2.rename(columns={"_c0": "_c0", "ful_merge": "_c5"})
+
+    return tbl2_test3.reset_index(drop=True)
 
 
 def pregunta_13():
