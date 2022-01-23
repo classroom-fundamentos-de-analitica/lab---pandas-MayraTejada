@@ -191,7 +191,7 @@ def pregunta_10():
     tbl0_copyOrdeFil1 = tbl0_copyOrdeFil.rename(columns={'_c1':'_c1', 'New':'_c2'})
     tbl0_copyOrdeFil2 = tbl0_copyOrdeFil1.drop_duplicates()
 
-    rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c0'])
+    rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c1'])
 
     return rest1.reset_index(drop=True)
 
