@@ -178,7 +178,22 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    tbl0_copy = tbl0.copy()
+
+    tbl0_copyOrde = tbl0_copy.sort_values(by=['_c2'])
+
+    tbl0_copyOrde['_c2'] = tbl0_copyOrde['_c2'].astype(str)
+
+    tbl0_copyOrde['New'] = tbl0_copyOrde.groupby('_c1')['_c2'].transform(lambda x: ':'.join(x))
+
+    tbl0_copyOrdeFil = tbl0_copyOrde[['_c1', 'New']]
+
+    tbl0_copyOrdeFil1 = tbl0_copyOrdeFil.rename(columns={'_c1':'_c0', 'New':'_c1'})
+    tbl0_copyOrdeFil2 = tbl0_copyOrdeFil1.drop_duplicates()
+
+    tbl0_copyOrdeFil2.reset_index(drop=True)
+
+    return tbl0_copyOrdeFil2.sort_values(by=['_c0'])
 
 
 def pregunta_11():
