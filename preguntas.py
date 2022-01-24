@@ -188,14 +188,14 @@ def pregunta_10():
 
     tbl0_copyOrdeFil = tbl0_copyOrde[['_c1', 'New']]
 
-    tbl0_copyOrdeFil1 = tbl0_copyOrdeFil.rename(columns={'_c1':'_c0', 'New':'_c1'})
+    tbl0_copyOrdeFil1 = tbl0_copyOrdeFil.rename(columns={'_c1':'_c1', 'New':'_c2'})
     tbl0_copyOrdeFil2 = tbl0_copyOrdeFil1.drop_duplicates()
 
-    rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c0'])
+    rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c1'])
 
     rest1.reset_index(drop=True)
 
-    return rest1.set_index('_c0')
+    return rest1.set_index('_c1')
 
 
 
