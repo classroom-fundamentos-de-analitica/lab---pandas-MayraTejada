@@ -22,7 +22,8 @@ def pregunta_01():
     40
 
     """
-    return
+    filas = len(tbl0.index)
+    return filas
 
 
 def pregunta_02():
@@ -33,7 +34,8 @@ def pregunta_02():
     4
 
     """
-    return
+    columna = tbl0.shape[1]
+    return columna
 
 
 def pregunta_03():
@@ -50,7 +52,9 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    frecuencia = tbl0['_c1']
+    frecuencia = frecuencia.value_counts()
+    return frecuencia.sort_index()
 
 
 def pregunta_04():
@@ -65,7 +69,10 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+
+    promedio = tbl0.groupby('_c1')['_c2'].mean()
+
+    return promedio.sort_index()
 
 
 def pregunta_05():
@@ -82,7 +89,8 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    maximoLetra = tbl0.groupby('_c1')['_c2'].max()
+    return maximoLetra.sort_index()
 
 
 def pregunta_06():
@@ -94,7 +102,9 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    letrasUnicos = tbl1['_c4'].str.upper().unique()
+    letrasUnicosLs = sorted(list(letrasUnicos))
+    return letrasUnicosLs
 
 
 def pregunta_07():
@@ -110,7 +120,8 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    sumaLetra = tbl0.groupby('_c1')['_c2'].sum()
+    return sumaLetra.sort_index()
 
 
 def pregunta_08():
@@ -128,7 +139,8 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    tbl0['suma'] = tbl0['_c0'] + tbl0['_c2']
+    return tbl0.sort_index()
 
 
 def pregunta_09():
@@ -146,7 +158,10 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    n_tbl0 = tbl0.copy()
+    n_tbl0['year'] = n_tbl0['_c3'].str.slice(0,4)
+
+    return n_tbl0.sort_index()
 
 
 def pregunta_10():
@@ -163,7 +178,25 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    tbl0_copy = tbl0.copy()
+
+    tbl0_copyOrde = tbl0_copy.sort_values(by=['_c2'])
+
+    tbl0_copyOrde['_c2'] = tbl0_copyOrde['_c2'].astype(str)
+
+    tbl0_copyOrde['New'] = tbl0_copyOrde.groupby('_c1')['_c2'].transform(lambda x: ':'.join(x))
+
+    tbl0_copyOrdeFil = tbl0_copyOrde[['_c1', 'New']]
+
+    tbl0_copyOrdeFil1 = tbl0_copyOrdeFil.rename(columns={'_c1':'_c1', 'New':'_c2'})
+    tbl0_copyOrdeFil2 = tbl0_copyOrdeFil1.drop_duplicates()
+
+    rest1 = tbl0_copyOrdeFil2.sort_values(by=['_c1'])
+
+    rest1.reset_index(drop=True)
+
+    return rest1.set_index('_c1')
+
 
 
 def pregunta_11():
@@ -182,7 +215,15 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    n1_tbl0 = tbl1.copy()
+    n1_tbl0['Order'] = n1_tbl0.groupby('_c0')['_c4'].transform(sorted)
+    n1_tbl0['New_c4'] = n1_tbl0.groupby('_c0')['Order'].transform(lambda x : ','.join(x))
+
+    newdf = n1_tbl0[['_c0', 'New_c4']]
+    newdf2 = newdf.drop_duplicates()
+    newdf3 = newdf2.rename(columns={"_c0": "_c0", "New_c4": "_c4"})
+
+    return newdf3.reset_index(drop=True)
 
 
 def pregunta_12():
@@ -200,7 +241,19 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    tbl2_test = tbl2.copy()
+    tbl2_test = tbl2_test.sort_values(by=['_c0', '_c5a'])
+
+    tbl2_test['merg_cols'] = tbl2_test['_c5a'] + ':' + tbl2_test['_c5b'].astype(str)
+
+    tbl2_test['ful_merge'] = tbl2_test.groupby('_c0')['merg_cols'].transform(lambda x: ','.join(x))
+
+    tbl2_test1 = tbl2_test[['_c0', 'ful_merge']]
+    tbl2_test2 = tbl2_test1.drop_duplicates()
+
+    tbl2_test3 = tbl2_test2.rename(columns={"_c0": "_c0", "ful_merge": "_c5"})
+
+    return tbl2_test3.reset_index(drop=True)
 
 
 def pregunta_13():
@@ -217,4 +270,8 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    tabl0_2 = tbl0.merge(tbl2, how='inner', on='_c0')
+    tabl0_2_copy = tabl0_2.copy()
+    tabl0_2_gr = tabl0_2_copy.groupby('_c1')['_c5b'].sum()
+    return tabl0_2_gr
